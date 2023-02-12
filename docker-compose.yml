@@ -1,0 +1,69 @@
+version: "3.8"
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: develop
+      DB_USERNAME: develop
+      DB_PASSWORD: develop
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mysql
+    volumes:
+      - ./backend:/app/backend
+    networks:
+      - app
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    tty: true
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app/fronted
+    depends_on:
+      - backend
+    networks:
+      - app
+
+  mysql:
+    container_name: pay-mysql
+    image: mysql/mysql-server:5.7.26
+    environment:
+      MYSQL_DATABASE: develop
+      MYSQL_PASSWORD: develop
+      MYSQL_ROOT_PASSWORD: develop
+      MYSQL_USER: develop
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    networks:
+      - app
+
+  phpmyadmin:
+    container_name: pay-phpmyadmin
+    depends_on:
+      - mysql
+    image: phpmyadmin/phpmyadmin
+    links:
+      - mysql:database
+    ports:
+      - "8001:80"
+    environment:
+      MYSQL_USER: develop
+      MYSQL_PASSWORD: develop
+      MYSQL_ROOT_PASSWORD: develop
+      PMA_HOST: database
+      UPLOAD_LIMIT: 1024000000
+    networks:
+      - app
+
+networks:
+  app:
+    driver: bridge
