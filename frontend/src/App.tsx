@@ -1,25 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { ThemeSwitcherProvider } from "react-css-theme-switcher";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 
-function App() {
+import "./App.css";
+import { Router } from "./views/Router";
+
+const themes = {
+  dark: `${process.env.PUBLIC_URL}/css/dark-theme.css`,
+  light: `${process.env.PUBLIC_URL}/css/light-theme.css`
+};
+
+function App(): JSX.Element {
+  const queryClient = new QueryClient();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <ThemeSwitcherProvider
+        themeMap={themes}
+        defaultTheme={"light"}
+        insertionPoint="styles-insertion-point"
+      >
+        <Router />
+      </ThemeSwitcherProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
 
