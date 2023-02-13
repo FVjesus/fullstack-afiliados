@@ -2,83 +2,57 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\Seller;
+use App\Models\Transaction;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class MainController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
-        //
-    }
+        $file = $request->file('file')->get();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        foreach (explode("\n", $file) as $key => $line) {
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+            if (mb_substr($line, 0, 1) == "") {
+                break;
+            }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+            $product = Product::where('name', mb_substr($line, 26, 30))->first();
+            if ($product == null) {
+                $product = Product::create(['name' => mb_substr($line, 26, 30)]);
+            }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+            $seller = Seller::where('name', mb_substr($line, 66, 20))->first();
+
+            if ($seller == null) {
+                $seller = Seller::create(['name' => mb_substr($line, 66, 20)]);
+            }
+
+            $transaction = new Transaction;
+            $transaction->type = mb_substr($line, 0, 1);
+            $transaction->date = date("y-m-d  H:i:s", strtotime(mb_substr($line, 1, 25)));
+            $transaction->value = mb_substr($line, 56, 10);
+            $transaction->product_id = $product->id;
+            $transaction->seller_id = $seller->id;
+
+            if (!$transaction->save()) {
+                abort(500, 'Cloud not create transaction');
+            }
+        }
+
+        return \response()->json([
+            "message" => 'Parsing completed'
+        ]);
     }
 }

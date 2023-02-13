@@ -13,20 +13,19 @@ class CreateSchema extends Migration
      */
     public function up()
     {
-        Schema::create('product', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string("name");
             $table->timestamps();
         });
 
-        Schema::create('seller', function (Blueprint $table) {
+        Schema::create('sellers', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->integer("type");
             $table->timestamps();
         });
 
-        Schema::create('transaction', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->integer("type");
             $table->dateTime("date");
