@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { Layout, Menu } from "antd";
 
-import { GithubOutlined } from "@ant-design/icons";
+import { MoneyCollectOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 
 import Links from "../../configs/LinkConfig";
 
@@ -26,8 +26,15 @@ const SideNav = (): ReactElement => {
       >
         <Menu.Item key={Links.app.home} onClick={() => navigate(Links.app.home)}>
           <span>
-            <GithubOutlined />
-            <span>Users</span>
+            <MoneyCollectOutlined />
+            <span>Transactions</span>
+          </span>
+        </Menu.Item>
+
+        <Menu.Item key={Links.app.sellers} onClick={() => navigate(Links.app.sellers)}>
+          <span>
+            <UsergroupAddOutlined />
+            <span>Sellers</span>
           </span>
         </Menu.Item>
       </Menu>
