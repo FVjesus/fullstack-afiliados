@@ -7,7 +7,6 @@ use App\Models\Seller;
 use App\Models\Transaction;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class MainController extends Controller
 {
@@ -42,7 +41,7 @@ class MainController extends Controller
             $transaction = new Transaction;
             $transaction->type = mb_substr($line, 0, 1);
             $transaction->date = date("y-m-d  H:i:s", strtotime(mb_substr($line, 1, 25)));
-            $transaction->value = mb_substr($line, 56, 10);
+            $transaction->value = mb_substr($line, 0, 1) == '3' ? -floatval(mb_substr($line, 56, 10)) : floatval(mb_substr($line, 56, 10));
             $transaction->product_id = $product->id;
             $transaction->seller_id = $seller->id;
 

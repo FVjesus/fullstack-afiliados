@@ -30,7 +30,7 @@ class CreateSchema extends Migration
             $table->integer("type");
             $table->dateTime("date");
             $table->integer("product_id");
-            $table->string("value");
+            $table->double("value");
             $table->integer("seller_id");
             $table->timestamps();
         });
