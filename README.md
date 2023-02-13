@@ -32,3 +32,4 @@ Para interromper a aplicação execute
 
 Obs: Caso o backend não execute corretamente execute `composer install` dentro do diretório backend, e refaça o passo a passo acima
 
+Link para apresentação: https://www.loom.com/embed/05edde7251bc42d8acc57f70ec91e329
