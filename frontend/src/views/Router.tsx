@@ -5,6 +5,7 @@ import Links from "../configs/LinkConfig";
 import { AppLayout } from "../layouts/AppLayout";
 import { HomeScreen } from "./home/HomeScreen";
 import { SellerScreen } from "./sellers/SellerScreen";
+import { ImportTransactionsScreen } from "./transactions/ImportTransactionsScreen";
 
 export const Router = (): ReactElement => {
   return (
@@ -14,6 +15,8 @@ export const Router = (): ReactElement => {
           <Route path="" element={<HomeScreen />} />
 
           <Route path={Links.app.sellers} element={<SellerScreen />} />
+
+          <Route path={Links.app.transactions} element={<ImportTransactionsScreen />} />
         </Route>
       </Routes>
     </BrowserRouter>

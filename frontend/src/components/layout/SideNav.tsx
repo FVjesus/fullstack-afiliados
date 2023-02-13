@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { Layout, Menu } from "antd";
 
-import { MoneyCollectOutlined, UsergroupAddOutlined } from "@ant-design/icons";
+import { FileTextOutlined, MoneyCollectOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 
 import Links from "../../configs/LinkConfig";
 
@@ -35,6 +35,13 @@ const SideNav = (): ReactElement => {
           <span>
             <UsergroupAddOutlined />
             <span>Sellers</span>
+          </span>
+        </Menu.Item>
+
+        <Menu.Item key={Links.app.transactions} onClick={() => navigate(Links.app.transactions)}>
+          <span>
+            <FileTextOutlined />
+            <span>Import Transactions</span>
           </span>
         </Menu.Item>
       </Menu>

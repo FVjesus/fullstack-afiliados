@@ -1,7 +1,8 @@
 const Links = {
   app: {
     home: "/",
-    sellers: "/sellers"
+    sellers: "/sellers",
+    transactions: "/transactions"
   }
 };
 

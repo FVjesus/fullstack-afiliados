@@ -1,12 +1,18 @@
 import React, { ReactElement } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { Card, Table, Tag, Typography } from "antd";
+import { Button, Card, Table, Tag, Typography } from "antd";
+
+import { PlusCircleOutlined } from "@ant-design/icons";
 
 import Flex from "../../components/shared/Flex";
+import Links from "../../configs/LinkConfig";
 import { useTransactionList } from "../../hooks/useTransactionList";
 
 export const HomeScreen = (): ReactElement => {
   const { transactions, isLoading, error } = useTransactionList();
+
+  const navigate = useNavigate();
 
   const renderType = (type: number) => {
     if (type == 1) {
@@ -67,6 +73,21 @@ export const HomeScreen = (): ReactElement => {
         <div className="container">
           <Flex className="py-2" justifyContent="between" alignItems="center">
             <Typography.Title>Transactions</Typography.Title>
+          </Flex>
+          <Flex alignItems="center" justifyContent="between">
+            <Flex className="mb-1">
+              <div className="mb-3"></div>
+            </Flex>
+            <div>
+              <Button
+                onClick={() => navigate(Links.app.transactions)}
+                type="primary"
+                icon={<PlusCircleOutlined />}
+                block
+              >
+                Import transactions
+              </Button>
+            </div>
           </Flex>
         </div>
       </div>

@@ -10,5 +10,12 @@ export const TransactionService = {
   getSellers: async () => {
     const response = await Client.get<GetSellersResponse>("/sellers");
     return response.sellers;
+  },
+  createTransaction: async (file: any) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await Client.post("/main", formData);
+    return response;
   }
 };

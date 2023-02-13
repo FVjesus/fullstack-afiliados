@@ -24,4 +24,13 @@ const get = async <T>(path: string, params: Record<string, unknown> = {}): Promi
   return handleResponse(response);
 };
 
-export const Client = { get };
+const post = async <T>(path: string, body: FormData): Promise<T> => {
+  const response = await fetch(`${API_URL}${path}`, {
+    method: "POST",
+    body: body
+  });
+
+  return handleResponse(response);
+};
+
+export const Client = { get, post };
